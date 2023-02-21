@@ -1,20 +1,22 @@
-require('dotenv').config()
+require('dotenv').config();
 
-const express = require('express')
-const cors = require('cors')
-const port = process.env.PORT || 27017
+const express = require('express');
+const cors = require('cors');
+const { errorHandler } = require('./middleware/errorMiddleware');
+const  connectDB = require('./config/db');
+const port = process.env.PORT || 1111
 
-connectDB()
+connectDB();
 
-const app = express()
-app.use(cors())
+const app = express();
+app.use(cors());
 
-app.options('*', cors())
+app.options('*', cors());
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 // turi likti paskutinis, kad pirmiausia viskas užsikrautų ir tik tada paleistų serverį
 app.listen(port, () => console.log(`Server started on port ${port}`))
